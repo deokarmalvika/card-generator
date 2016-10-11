@@ -9,5 +9,15 @@ namespace CardGenerator;
 
 class Card
 {
+    protected $name;
+    protected $visualBlocks;
 
+    /**
+     * Card constructor.
+     */
+    public function __construct($name, $visualBloks)
+    {
+        $this->name = $name;
+        $this->visualBlocks = $visualBloks;
+    }
 }
