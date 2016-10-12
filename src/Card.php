@@ -14,8 +14,10 @@ class Card
 
     /**
      * Card constructor.
+     * @param $name
+     * @param array $visualBloks
      */
-    public function __construct($name, $visualBloks)
+    public function __construct($name, array $visualBloks)
     {
         $this->name = $name;
         $this->visualBlocks = $visualBloks;
