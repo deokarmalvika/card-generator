@@ -20,4 +20,9 @@ class Card
         $this->name = $name;
         $this->visualBlocks = $visualBloks;
     }
+
+    public function render()
+    {
+
+    }
 }
