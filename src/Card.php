@@ -7,11 +7,19 @@
 namespace CardGenerator;
 
 
+use CardGenerator\Base\Color;
+use CardGenerator\Base\Size;
+use CardGenerator\Elements\ApplyToImage;
+use CardGenerator\Elements\Border;
+use CardGenerator\Elements\CsvInterface;
+use CardGenerator\Elements\Image;
+use CardGenerator\Elements\Rectangle;
+use CardGenerator\Elements\Text;
+
 class Card
 {
     protected $path;
-    protected $width;
-    protected $height;
+    protected $size;
     protected $visualBlocks;
 
     protected $image = null;
@@ -27,20 +35,45 @@ class Card
     public function __construct($path, $width, $height, array $visualBlocks)
     {
         $this->path = $path;
-        $this->width = (int)$width;
-        $this->height = (int)$height;
-        $this->image = imagecreatetruecolor($this->width, $this->height);
+        $this->size = new Size((int)$width, (int)$height);
         $this->initBlankImage();
         foreach ($visualBlocks as $blockData) {
-            $this->visualBlocks[] = new VisualBlock($this->image, $blockData);
+            if($blockData['type'] === 'border'){
+                $this->visualBlocks[] = Border::make()
+                    ->width($blockData['width'])
+                    ->size($blockData['w'], $blockData['h'])
+                    ->position($blockData['x'], $blockData['y'])
+                    ->color(new Color(explode(' ', $blockData['color'])));
+            }elseif ($blockData['type'] === 'image'){
+                $this->visualBlocks[] = Image::make()
+                    ->size($blockData['w'], $blockData['h'])
+                    ->position($blockData['x'], $blockData['y'])
+                    ->path($blockData['path'])
+                    ->type($blockData['type'])
+                    ->opacity($blockData['opacity']);
+            }elseif ($blockData['type'] === 'rectangle'){
+                $this->visualBlocks[] = Rectangle::make()
+                    ->size($blockData['w'], $blockData['h'])
+                    ->position($blockData['x'], $blockData['y'])
+                    ->color(new Color(explode(' ', $blockData['color'])));
+            }elseif ($blockData['type'] === 'text'){
+                $this->visualBlocks[] = Text::make()
+                    ->position($blockData['x'], $blockData['y'])
+                    ->text($blockData['text'])
+                    ->font($blockData['font'])
+                    ->fontSize($blockData['fontSize'])
+                    ->angle($blockData['angle'])
+                    ->color(new Color(explode(' ', $blockData['color'])));
+            }
+
         }
     }
 
     public function render()
     {
-        /** @var VisualBlock $block */
-        foreach($this->visualBlocks as $block){
-            $block->setOnImage();
+        /** @var ApplyToImage $block */
+        foreach ($this->visualBlocks as $block) {
+            $block->putOnImage($this->image);
         }
         imagepng($this->image, $this->path, 9);
         imagedestroy($this->image);
@@ -48,18 +81,29 @@ class Card
 
     protected function initBlankImage()
     {
-        $this->image = imagecreatetruecolor($this->width, $this->height);
-        $white = GdHelper::colorFromArray($this->image, [255, 255, 255, 0]);
-        imagefilledrectangle($this->image, 0, 0, $this->width, $this->height, $white);
+        $this->image = imagecreatetruecolor($this->size->w(), $this->size->h());
+        $white = new Color([255, 255, 255, 0]);
+        imagefilledrectangle($this->image, 0, 0, $this->size->w(), $this->size->h(), $white->allocateColor($this->image));
     }
 
     public function toCsv()
     {
         $f = fopen('res.csv', 'w');
-        fputcsv($f, [$this->width, $this->height], ';');
-        /** @var VisualBlock $block */
-        foreach($this->visualBlocks as $block){
-            $block->toCsv($f);
+        fputcsv($f, Card::getParamNames(), ';');
+        fputcsv($f, [$this->size->w(), $this->size->h()], ';');
+        /** @var CsvInterface $block */
+        foreach ($this->visualBlocks as $block) {
+            fputcsv($f, $block->getParamNames(), ';');
+            fputcsv($f, $block->toCsvArray(), ';');
         }
+        fclose($f);
+    }
+
+    public static function getParamNames()
+    {
+        return [
+            'Ширина',
+            'Высота',
+        ];
     }
 }

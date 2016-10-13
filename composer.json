@@ -1,0 +1,20 @@
+{
+  "name": "new-iinventor/card-generator",
+  "description": "Generate cards for table games",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ionov George",
+      "email": "newinventor20@gmail.com"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "NewInventor\\Form\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}

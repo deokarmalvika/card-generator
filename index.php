@@ -1,7 +1,5 @@
 <?php
-require 'src/GdHelper.php';
-require 'src/VisualBlock.php';
-require 'src/Card.php';
+require __DIR__ . '/vendor/autoload.php';
 if (isset($_POST['show']) || isset($_POST['get-png'])) {
     foreach ($_POST['blocks'] as $key => $block) {
         $_POST['blocks'][$key]['background-image']['name'] = $_FILES['blocks']['name'][$key]['background-image'];
@@ -12,18 +10,17 @@ if (isset($_POST['show']) || isset($_POST['get-png'])) {
     }
     $card = new \CardGenerator\Card(__DIR__ . '/res.png', $_POST['image']['w'], $_POST['image']['h'], $_POST['blocks']);
     $card->render();
-    if (isset($_POST['get-png'])) {
-        $size = filesize('res.png');
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename=res.png');
-        header('Content-Transfer-Encoding: binary');
-        header('Connection: Keep-Alive');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
-        die();
+}
+if(isset($_POST['get-csv'])){
+    foreach ($_POST['blocks'] as $key => $block) {
+        $_POST['blocks'][$key]['background-image']['name'] = $_FILES['blocks']['name'][$key]['background-image'];
+        $_POST['blocks'][$key]['background-image']['type'] = $_FILES['blocks']['type'][$key]['background-image'];
+        $_POST['blocks'][$key]['background-image']['tmp_name'] = $_FILES['blocks']['tmp_name'][$key]['background-image'];
+        $_POST['blocks'][$key]['background-image']['error'] = $_FILES['blocks']['error'][$key]['background-image'];
+        $_POST['blocks'][$key]['background-image']['size'] = $_FILES['blocks']['size'][$key]['background-image'];
     }
+    $card = new \CardGenerator\Card(__DIR__ . '/res.png', $_POST['image']['w'], $_POST['image']['h'], $_POST['blocks']);
+    $card->toCsv();
 }
 ?>
 
@@ -92,7 +89,7 @@ if (isset($_POST['show']) || isset($_POST['get-png'])) {
     </div>
     <input class="btn btn-primary" type="submit" name="show" value="Посмотреть">
     <input class="btn btn-default" type="submit" name="get-png" value="Скачать результат как PNG">
-    <input class="btn btn-default" type="button" name="get-csv" value="Скачать результат как CSV">
+    <input class="btn btn-default" type="submit" name="get-csv" value="Скачать результат как CSV">
 </form>
 </body>
 </html>
