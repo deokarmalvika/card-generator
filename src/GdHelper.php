@@ -13,6 +13,12 @@ class GdHelper
 {
     public static function colorFromArray($image, array $data)
     {
+
+        return self::allocateColor($image, self::getColorArray($data));
+    }
+
+    public static function getColorArray(array $data)
+    {
         $color = [
             'red' => 255,
             'green' => 255,
@@ -31,7 +37,8 @@ class GdHelper
         if (isset($data[3])) {
             $color['alpha'] = (int)$data[3];
         }
-        return self::allocateColor($image, $color);
+
+        return $color;
     }
 
     public static function allocateColor($image, array $color)

@@ -27,18 +27,19 @@ class Card
     public function __construct($path, $width, $height, array $visualBlocks)
     {
         $this->path = $path;
-        $this->visualBlocks = $visualBlocks;
         $this->width = (int)$width;
         $this->height = (int)$height;
         $this->image = imagecreatetruecolor($this->width, $this->height);
         $this->initBlankImage();
+        foreach ($visualBlocks as $blockData) {
+            $this->visualBlocks[] = new VisualBlock($this->image, $blockData);
+        }
     }
 
     public function render()
     {
         /** @var VisualBlock $block */
-        foreach($this->visualBlocks as $blockData){
-            $block = new VisualBlock($this->image, $blockData);
+        foreach($this->visualBlocks as $block){
             $block->setOnImage();
         }
         imagepng($this->image, $this->path, 9);
@@ -50,5 +51,15 @@ class Card
         $this->image = imagecreatetruecolor($this->width, $this->height);
         $white = GdHelper::colorFromArray($this->image, [255, 255, 255, 0]);
         imagefilledrectangle($this->image, 0, 0, $this->width, $this->height, $white);
+    }
+
+    public function toCsv()
+    {
+        $f = fopen('res.csv', 'w');
+        fputcsv($f, [$this->width, $this->height], ';');
+        /** @var VisualBlock $block */
+        foreach($this->visualBlocks as $block){
+            $block->toCsv($f);
+        }
     }
 }

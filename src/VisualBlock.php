@@ -10,11 +10,13 @@ namespace CardGenerator;
 class VisualBlock
 {
     protected $backgroundColor = null;
+    protected $backgroundColorRaw = null;
     protected $backgroundImage;
+    protected $backgroundImageRaw;
     protected $text = '';
     protected $position = ['x' => 0, 'y' => 0];
     protected $size = ['w' => 0, 'h' => 0];
-    protected $border = ['color' => null, 'width' => 0];
+    protected $border = ['color' => null, 'colorRaw' => null, 'width' => 0];
 
     protected $image;
 
@@ -122,5 +124,10 @@ class VisualBlock
                 );
             }
         }
+    }
+
+    public function toArray($file)
+    {
+        return [];
     }
 }
