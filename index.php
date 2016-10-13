@@ -25,10 +25,10 @@ function preparePostData(){
 if(isset($_POST['load-zip'])){
     $generator = new \NewInventor\CardGenerator\CardStackGenerator($_FILES['zip']);
     $path = $generator->process();
-//    if($path !== '/') {
-//        header("Location: $path");
-//        die();
-//    }
+    if($path !== '/') {
+        header("Location: $path");
+        die();
+    }
 }
 
 if (isset($_POST['get-png']) || isset($_POST['show']) || isset($_POST['get-csv']) || isset($_POST['get-csv-short'])) {
