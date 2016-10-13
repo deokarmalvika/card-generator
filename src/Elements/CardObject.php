@@ -6,11 +6,11 @@
  * Time: 16:34
  */
 
-namespace CardGenerator\Elements;
+namespace NewInventor\CardGenerator\Elements;
 
 
-use CardGenerator\Base\Position;
-use CardGenerator\Base\Size;
+use NewInventor\CardGenerator\Base\Position;
+use NewInventor\CardGenerator\Base\Size;
 
 abstract class CardObject
 {

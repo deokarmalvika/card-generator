@@ -6,10 +6,10 @@
  * Time: 16:39
  */
 
-namespace CardGenerator;
+namespace NewInventor\CardGenerator;
 
 
-use CardGenerator\Base\Color;
+use NewInventor\CardGenerator\Base\Color;
 
 trait Colorable
 {

@@ -6,7 +6,7 @@
  * Time: 15:42
  */
 
-namespace CardGenerator\Base;
+namespace NewInventor\CardGenerator\Base;
 
 
 class Color

@@ -6,11 +6,11 @@
  * Time: 15:54
  */
 
-namespace CardGenerator\Elements;
+namespace NewInventor\CardGenerator\Elements;
 
 
-use CardGenerator\Base\Position;
-use CardGenerator\Base\Size;
+use NewInventor\CardGenerator\Base\Position;
+use NewInventor\CardGenerator\Base\Size;
 
 class Image extends CardObject implements Arrayable, CsvInterface, ApplyToImage, CardObjectInterface
 {
@@ -156,6 +156,39 @@ class Image extends CardObject implements Arrayable, CsvInterface, ApplyToImage,
             $this->path,
             $this->type,
             $this->opacity,
-        ], $this->position, $this->size->toArray());
+        ], $this->position->toArray(), $this->size->toArray());
+    }
+
+    public static function copyFiles($data)
+    {
+        if ($data['name'] === '') {
+            return ['path' => '', 'type' => ''];
+        }
+        $imagePath = dirname(dirname(__DIR__)) . '/loaded/' . $data['name'];
+        if (move_uploaded_file($data['tmp_name'], $imagePath)) {
+            return ['path' => $imagePath, 'type' => substr($data['name'], strrpos($data['name'], '.') + 1)];
+        }
+        return ['path' => '', 'type' => ''];
+    }
+
+    /**
+     * @param array $data
+     * @param string $zipPath
+     *
+     * @return Image
+     */
+    public static function fromCsv(array $data, $zipPath)
+    {
+        $image = Image::make();
+        if (array_shift($data) !== 'image') {
+            return $image;
+        }
+        $image
+            ->path($zipPath . '/images/' . array_shift($data))
+            ->type(array_shift($data))
+            ->opacity(array_shift($data))
+            ->position(array_shift($data), array_shift($data))
+            ->size(array_shift($data), array_shift($data));
+        return $image;
     }
 }

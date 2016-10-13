@@ -6,13 +6,13 @@
  * Time: 15:54
  */
 
-namespace CardGenerator\Elements;
+namespace NewInventor\CardGenerator\Elements;
 
 
-use CardGenerator\Base\Color;
-use CardGenerator\Base\Position;
-use CardGenerator\Base\Size;
-use CardGenerator\Colorable;
+use NewInventor\CardGenerator\Base\Color;
+use NewInventor\CardGenerator\Base\Position;
+use NewInventor\CardGenerator\Base\Size;
+use NewInventor\CardGenerator\Colorable;
 
 class Border extends CardObject implements Arrayable, CsvInterface, ApplyToImage, CardObjectInterface
 {
@@ -101,6 +101,25 @@ class Border extends CardObject implements Arrayable, CsvInterface, ApplyToImage
         return array_merge([
             'border',
             $this->width
-        ], $this->position, $this->size->toArray(), $this->color->toArray());
+        ], $this->position->toArray(), $this->size->toArray(), $this->color->toArray());
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Border
+     */
+    public static function fromCsv(array $data = [])
+    {
+        $border = Border::make();
+        if(array_shift($data) !== 'border'){
+            return $border;
+        }
+        $border
+            ->width(array_shift($data))
+            ->position(array_shift($data), array_shift($data))
+            ->size(array_shift($data), array_shift($data))
+            ->color(new Color($data));
+        return $border;
     }
 }

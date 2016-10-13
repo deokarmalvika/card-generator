@@ -6,7 +6,7 @@
  * Time: 15:57
  */
 
-namespace CardGenerator\Base;
+namespace NewInventor\CardGenerator\Base;
 
 
 class Position extends Vector2D{}

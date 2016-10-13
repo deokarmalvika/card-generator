@@ -6,7 +6,7 @@
  * Time: 16:11
  */
 
-namespace CardGenerator\Base;
+namespace NewInventor\CardGenerator\Base;
 
 
 class Vector2D

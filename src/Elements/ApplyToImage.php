@@ -6,7 +6,7 @@
  * Time: 17:33
  */
 
-namespace CardGenerator\Elements;
+namespace NewInventor\CardGenerator\Elements;
 
 
 interface ApplyToImage

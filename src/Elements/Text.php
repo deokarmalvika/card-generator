@@ -6,13 +6,13 @@
  * Time: 15:54
  */
 
-namespace CardGenerator\Elements;
+namespace NewInventor\CardGenerator\Elements;
 
 
-use CardGenerator\Base\Color;
-use CardGenerator\Base\Position;
-use CardGenerator\Base\Size;
-use CardGenerator\Colorable;
+use NewInventor\CardGenerator\Base\Color;
+use NewInventor\CardGenerator\Base\Position;
+use NewInventor\CardGenerator\Base\Size;
+use NewInventor\CardGenerator\Colorable;
 
 class Text extends CardObject implements Arrayable, CsvInterface, ApplyToImage, CardObjectInterface
 {
@@ -173,6 +173,28 @@ class Text extends CardObject implements Arrayable, CsvInterface, ApplyToImage, 
             $this->font,
             $this->fontSize,
             $this->angle,
-        ], $this->position, $this->color->toArray());
+        ], $this->position->toArray(), $this->color->toArray());
+    }
+
+    /**
+     * @param array $data
+     * @param string $zipPath
+     *
+     * @return Text
+     */
+    public static function fromCsv(array $data, $zipPath)
+    {
+        $text = Text::make();
+        if (array_shift($data) !== 'text') {
+            return $text;
+        }
+        $text
+            ->text(array_shift($data))
+            ->font($zipPath . '/fonts/' . array_shift($data))
+            ->fontSize(array_shift($data))
+            ->angle(array_shift($data))
+            ->position(array_shift($data), array_shift($data))
+            ->color(new Color($data));
+        return $text;
     }
 }

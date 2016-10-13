@@ -6,13 +6,13 @@
  * Time: 15:54
  */
 
-namespace CardGenerator\Elements;
+namespace NewInventor\CardGenerator\Elements;
 
 
-use CardGenerator\Base\Color;
-use CardGenerator\Base\Position;
-use CardGenerator\Base\Size;
-use CardGenerator\Colorable;
+use NewInventor\CardGenerator\Base\Color;
+use NewInventor\CardGenerator\Base\Position;
+use NewInventor\CardGenerator\Base\Size;
+use NewInventor\CardGenerator\Colorable;
 
 class Rectangle extends CardObject implements Arrayable, CsvInterface, ApplyToImage, CardObjectInterface
 {
@@ -77,6 +77,24 @@ class Rectangle extends CardObject implements Arrayable, CsvInterface, ApplyToIm
     {
         return array_merge([
             'rectangle',
-        ], $this->position, $this->size->toArray(), $this->color->toArray());
+        ], $this->position->toArray(), $this->size->toArray(), $this->color->toArray());
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Rectangle
+     */
+    public static function fromCsv(array $data = [])
+    {
+        $rectangle = Rectangle::make();
+        if (array_shift($data) !== 'rectangle') {
+            return $rectangle;
+        }
+        $rectangle
+            ->position(array_shift($data), array_shift($data))
+            ->size(array_shift($data), array_shift($data))
+            ->color(new Color($data));
+        return $rectangle;
     }
 }

@@ -6,7 +6,7 @@
  * Time: 17:21
  */
 
-namespace CardGenerator\Elements;
+namespace NewInventor\CardGenerator\Elements;
 
 
 interface Arrayable

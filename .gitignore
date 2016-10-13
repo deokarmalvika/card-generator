@@ -24,7 +24,11 @@ crashlytics-build.properties
 fabric.properties
 
 .idea/
-loaded/*
+loaded/*.zip
+loaded/*/*
+ready/*.zip
+ready/*.png
+ready/*.csv
 vendor/
-
+test/
 res.*

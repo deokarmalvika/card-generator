@@ -6,7 +6,7 @@
  * Time: 15:58
  */
 
-namespace CardGenerator\Base;
+namespace NewInventor\CardGenerator\Base;
 
 
 class Size extends Vector2D

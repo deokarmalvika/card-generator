@@ -6,7 +6,7 @@
  * Time: 14:39
  */
 
-namespace CardGenerator;
+namespace NewInventor\CardGenerator;
 
 
 class Controller

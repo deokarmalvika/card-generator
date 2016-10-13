@@ -13,7 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "NewInventor\\Form\\": "src/"
+      "NewInventor\\CardGenerator\\": "src/"
     }
   },
   "minimum-stability": "dev"
