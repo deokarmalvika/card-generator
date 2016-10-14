@@ -9,6 +9,7 @@ namespace NewInventor\CardGenerator;
 
 use NewInventor\CardGenerator\Base\Color;
 use NewInventor\CardGenerator\Base\Size;
+use NewInventor\ConfigTool\Config;
 use NewInventor\CardGenerator\Elements\ApplyToImage;
 use NewInventor\CardGenerator\Elements\Border;
 use NewInventor\CardGenerator\Elements\CardObject;
@@ -79,14 +80,15 @@ class Card
         foreach ($this->visualBlocks as $block) {
             $block->putOnImage($this->image);
         }
-        if(!@mkdir($_SERVER['DOCUMENT_ROOT'] . '/ready/' . $folder) && !is_dir($_SERVER['DOCUMENT_ROOT'] . '/ready/' . $folder)){
+        $baseUrl = Config::get('main.basePath', $_SERVER['DOCUMENT_ROOT']);
+        if(!@mkdir($baseUrl . '/ready/' . $folder) && !is_dir($baseUrl . '/ready/' . $folder)){
             throw new \Exception('no folder');
         }
         $path = '/ready/' . $folder .'result_' . time() . '_' . mt_rand() . '.png';
-        imagepng($this->image, $_SERVER['DOCUMENT_ROOT'] . $path, 9);
+        imagepng($this->image, $baseUrl . $path, 9);
         imagedestroy($this->image);
 
-        return $path;
+        return Config::get('main.baseUrl') . $path;
     }
 
     protected function initBlankImage()
@@ -99,7 +101,7 @@ class Card
     public function toCsv($showNames = true)
     {
         $path = '/ready/result_' . time() . '_' . mt_rand() . '.csv';
-        $f = fopen($_SERVER['DOCUMENT_ROOT'] . $path, 'w');
+        $f = fopen(Config::get('main.basePath', $_SERVER['DOCUMENT_ROOT']) . $path, 'w');
         if($showNames) {
             fputcsv($f, Card::getParamNames(), ';');
         }
@@ -113,7 +115,7 @@ class Card
         }
         fclose($f);
 
-        return $path;
+        return Config::get('main.baseUrl') . $path;
     }
 
     public static function getParamNames()

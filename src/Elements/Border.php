@@ -64,8 +64,8 @@ class Border extends CardObject implements Arrayable, CsvInterface, ApplyToImage
                     $image,
                     $this->position->x() + $i,
                     $this->position->y() + $i,
-                    $this->position->x() + $this->size->w() - $i,
-                    $this->position->y() + $this->size->h() - $i,
+                    $this->position->x() + $this->size->w() - 1 - $i,
+                    $this->position->y() + $this->size->h() - 1 - $i,
                     $color
                 );
             }

@@ -1,6 +1,8 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
+\NewInventor\ConfigTool\Config::init(__DIR__ . '/config');
+
 function preparePostData(){
     if (isset($_FILES['blocks'])) {
         foreach ($_POST['blocks'] as $key => $block) {

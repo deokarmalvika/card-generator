@@ -11,6 +11,7 @@ namespace NewInventor\CardGenerator\Elements;
 
 use NewInventor\CardGenerator\Base\Position;
 use NewInventor\CardGenerator\Base\Size;
+use NewInventor\ConfigTool\Config;
 
 class Image extends CardObject implements Arrayable, CsvInterface, ApplyToImage, CardObjectInterface
 {
@@ -164,7 +165,7 @@ class Image extends CardObject implements Arrayable, CsvInterface, ApplyToImage,
         if ($data['name'] === '') {
             return ['path' => '', 'type' => ''];
         }
-        $imagePath = dirname(dirname(__DIR__)) . '/loaded/' . $data['name'];
+        $imagePath = Config::get('main.basePath') . '/loaded/' . $data['name'];
         if (move_uploaded_file($data['tmp_name'], $imagePath)) {
             return ['path' => $imagePath, 'type' => substr($data['name'], strrpos($data['name'], '.') + 1)];
         }

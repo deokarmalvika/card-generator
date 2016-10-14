@@ -13,6 +13,7 @@ use NewInventor\CardGenerator\Base\Color;
 use NewInventor\CardGenerator\Base\Position;
 use NewInventor\CardGenerator\Base\Size;
 use NewInventor\CardGenerator\Colorable;
+use NewInventor\ConfigTool\Config;
 
 class Text extends CardObject implements Arrayable, CsvInterface, ApplyToImage, CardObjectInterface
 {
@@ -130,7 +131,7 @@ class Text extends CardObject implements Arrayable, CsvInterface, ApplyToImage, 
                 $this->position->x(),
                 $this->position->y(),
                 $color,
-                $this->font,
+                (strpos($this->font, '/') === false ? Config::get('main.basePath') . '/fonts/' : '') . $this->font,
                 $this->text
             );
         }

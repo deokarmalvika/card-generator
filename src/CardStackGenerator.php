@@ -9,6 +9,8 @@
 namespace NewInventor\CardGenerator;
 
 
+use NewInventor\ConfigTool\Config;
+
 class CardStackGenerator
 {
     protected $zipPath;
@@ -22,7 +24,7 @@ class CardStackGenerator
     {
         $this->copyFile($fileData);
         $zip = new \ZipArchive();
-        $path = $_SERVER['DOCUMENT_ROOT'] . '/loaded/zip_' . time();
+        $path = Config::get('main.basePath', $_SERVER['DOCUMENT_ROOT']) . '/loaded/zip_' . time();
         if (!mkdir($path, 0777) && !is_dir($path)) {
             throw new \Exception('no directory');
         }
@@ -38,7 +40,7 @@ class CardStackGenerator
         if ($data['name'] === '') {
             $this->zipPath = '';
         }
-        $path = $_SERVER['DOCUMENT_ROOT'] . '/loaded/stack.zip';
+        $path = Config::get('main.basePath', $_SERVER['DOCUMENT_ROOT']) . '/loaded/stack.zip';
         if (move_uploaded_file($data['tmp_name'], $path)) {
             $this->zipPath = $path;
             return;
@@ -75,11 +77,12 @@ class CardStackGenerator
 
     protected function zip()
     {
-        $rootPath = $_SERVER['DOCUMENT_ROOT'] . '/ready/stack';
+        $baseUrl = Config::get('main.basePath', $_SERVER['DOCUMENT_ROOT']);
+        $rootPath = $baseUrl . '/ready/stack';
         $zip = new \ZipArchive();
         $zipPath = '/ready/result_' . time() . '.zip';
         $zip->open(
-            $_SERVER['DOCUMENT_ROOT'] . $zipPath,
+            $baseUrl . $zipPath,
             \ZipArchive::CREATE | \ZipArchive::OVERWRITE
         );
         $files = new \RecursiveIteratorIterator(
@@ -102,7 +105,7 @@ class CardStackGenerator
             unlink($file);
         }
         rmdir($rootPath);
-        return $zipPath;
+        return Config::get('main.baseUrl') . $zipPath;
     }
 
     protected function removeLoaded($dir)

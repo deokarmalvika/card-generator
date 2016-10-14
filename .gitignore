@@ -31,4 +31,5 @@ ready/*.png
 ready/*.csv
 vendor/
 test/
+fonts/
 res.*

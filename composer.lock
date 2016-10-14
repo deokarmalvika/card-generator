@@ -1,0 +1,94 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "250cd27df577350195b025dc2d51e4b4",
+    "packages": [
+        {
+            "name": "new-inventor/config-tool",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/new-inventor/config-tool.git",
+                "reference": "c0123eb9bd5da035976d76b1dc1d94f49669b320"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/new-inventor/config-tool/zipball/c0123eb9bd5da035976d76b1dc1d94f49669b320",
+                "reference": "c0123eb9bd5da035976d76b1dc1d94f49669b320",
+                "shasum": ""
+            },
+            "require": {
+                "new-inventor/php-type-checker": "^2.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NewInventor\\ConfigTool\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "George Ionov",
+                    "email": "newinventor20@gmail.com"
+                }
+            ],
+            "description": "Config tool for projects",
+            "time": "2016-10-14T13:04:53+00:00"
+        },
+        {
+            "name": "new-inventor/php-type-checker",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/new-inventor/php-type-checker.git",
+                "reference": "0404c4ffeb3053a7b1937fd1f16253b3067bb95b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/new-inventor/php-type-checker/zipball/0404c4ffeb3053a7b1937fd1f16253b3067bb95b",
+                "reference": "0404c4ffeb3053a7b1937fd1f16253b3067bb95b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NewInventor\\TypeChecker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "George Ionov",
+                    "email": "newinventor20@gmail.com"
+                }
+            ],
+            "description": "Type checker for base types or list of types or arrays",
+            "time": "2016-10-14T12:45:15+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
