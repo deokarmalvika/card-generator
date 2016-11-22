@@ -19,6 +19,8 @@
   "minimum-stability": "dev",
   "require": {
     "new-inventor/php-type-checker": "^2.0",
-    "new-inventor/config-tool": "^1.1"
+    "new-inventor/config-tool": "^1.1",
+    "altorouter/altorouter": "^1.2",
+    "symfony/yaml": "^3.1"
   }
 }

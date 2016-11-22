@@ -72,7 +72,6 @@ class HtmlHelper
         $res = "<div data-object-group='$id'><h3>Картинка</h3>" . self::minusButton();
         $res .= self::input('block-type', $data['block-type'], 'hidden', $id) .
             self::formGroup('image', 'Картинка', $data['image'], 'file', $id) .
-            self::formGroup('opacity', 'Прозрачность', $data['opacity'], 'text', $id) .
             self::formGroup('x', 'X', $data['x'], 'text', $id) .
             self::formGroup('y', 'Y', $data['y'], 'text', $id) .
             self::formGroup('w', 'W', $data['w'], 'text', $id) .
@@ -91,7 +90,6 @@ class HtmlHelper
             self::formGroup('color', 'Цвет', $data['color'], 'text', $id) .
             self::formGroup('font', 'Шрифт', $data['font'], 'text', $id) .
             self::formGroup('font-size', 'Размер шрифта', $data['font-size'], 'text', $id) .
-            self::formGroup('angle', 'Угол поворота', $data['angle'], 'text', $id) .
             self::formGroup('x', 'X', $data['x'], 'text', $id) .
             self::formGroup('y', 'Y', $data['y'], 'text', $id);
         $res .= '</div>';

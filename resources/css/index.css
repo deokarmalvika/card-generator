@@ -1,0 +1,27 @@
+div[data-object-group]{
+    display: inline-block;
+    vertical-align: top;
+}
+
+div.font-preview{
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+}
+div.font-preview-block{
+    float: left;
+    width: 200px;
+    height: 100px;
+}
+
+div.font-preview-block .name {
+    text-align: center;
+    height:30px;
+    width: 100%;
+}
+
+div.font-preview-block .text-string {
+    text-align: center;
+    height:70px;
+    width: 100%;
+}

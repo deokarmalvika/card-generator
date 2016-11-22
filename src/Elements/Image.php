@@ -106,6 +106,8 @@ class Image extends CardObject implements Arrayable, CsvInterface, ApplyToImage,
         if ($this->path !== '') {
             if ($this->type === 'png') {
                 $image = imagecreatefrompng($this->path);
+                imagealphablending($image, false);
+                imagesavealpha($image, true);
             } elseif ($this->type === 'jpg') {
                 $image = imagecreatefromjpeg($this->path);
             } elseif ($this->type === 'gif') {
