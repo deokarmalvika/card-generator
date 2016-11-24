@@ -32,32 +32,55 @@
 
     Dropzone.autoDiscover = false;
 
-    var imagesUpload = $("#images-upload").dropzone({
+    var filesUpload = $("#files-upload").dropzone({
         url: 'image.php',
-        paramName: "image",
-        acceptedFiles: 'image/*',
+        paramName: "file",
+        acceptedFiles: 'image/*,.ttf,.TTF,.csv,.zip',
         maxFilesize: 20,
         parallelUploads: 10,
-        dictDefaultMessage: 'Перенесите необходимые картинки.',
-        dictInvalidFileType: 'Поддерживаются только картинки',
+        dictDefaultMessage: 'Перенесите необходимые файлы.',
+        dictInvalidFileType: 'Поддерживаются только картинки, шрифты, csv и zip файлы',
         dictFileTooBig: 'Файл должен быть меньше {{maxFilesize}}. Текущий размер: {{filesize}}',
         complete: function (file) {
+            if(file.status === 'error'){
+                alert(file.status, 'File "' + file.name + '" ' + 'not loaded to the server.' + (!file.accepted ? ' Wrong file type.' : ' Uncatchable error'));
+            }else if(file.status === 'success'){
+                alert(file.status, 'File "' + file.name + '" ' + 'loaded to the server.');
+            }
+
             this.removeFile(file);
+        },
+        queuecomplete: function (file){
+            $('[data-drop-zone]').css('left', '-100%').css('right', '100%');
         }
     });
 
-    var fontsUpload = $("#fonts-upload").dropzone({
-        url: 'font.php',
-        paramName: "font",
-        maxFilesize: 5,
-        acceptedFiles: '.ttf,.TTF',
-        parallelUploads: 10,
-        dictDefaultMessage: 'Перенесите необходимые шрифты.',
-        dictInvalidFileType: 'Поддерживаются только файлы шрифтов',
-        dictFileTooBig: 'Файл должен быть меньше {{maxFilesize}}. Текущий размер: {{filesize}}',
-        complete: function (file) {
-            this.removeFile(file);
+    $(document).on('input change', '[data-width]', function (e) {
+        $('#card').attr('width', parseInt($(this).val()));
+    });
 
-        }
+    $(document).on('input change', '[data-height]', function (e) {
+        $('#card').attr('height', parseInt($(this).val()));
+    });
+
+    $(document).on('click', '[data-upload-link]', function (e) {
+        e.preventDefault();
+        $("#files-upload").click();
+    });
+
+    $(document).on('dragover', 'body', function(e) {
+        $('[data-drop-zone]').css('left', '0').css('right', '0');
+    });
+
+    $(document).on('click', '[data-image-block]', function (e) {
+        e.preventDefault();
+        $(this).closest('li').toggleClass('active');
+        $('[data-image-panel]').toggleClass('hidden');
+    });
+
+    $(document).on('click', '[data-font-block]', function (e) {
+        e.preventDefault();
+        $(this).closest('li').toggleClass('active');
+        $('[data-font-panel]').toggleClass('hidden');
     });
 })(jQuery);

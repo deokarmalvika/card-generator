@@ -1,7 +1,8 @@
 <?php
+session_start();
+var_dump($_SESSION);
 require __DIR__ . '/vendor/autoload.php';
 \NewInventor\ConfigTool\Config::init(__DIR__ . '/config');
-session_start();
 require_once __DIR__ . '/functions.php';
 \NewInventor\CardGenerator\Router::handleRequest();
 
@@ -59,3 +60,5 @@ if(isset($_POST['get-csv-short'])){
     $path = $card->toCsv();
     header("Location: $path");
 }
+
+session_write_close();

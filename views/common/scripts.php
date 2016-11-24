@@ -19,3 +19,4 @@
 <script src="<?= resourceUrl('js/border.js') ?>"></script>
 <script src="<?= resourceUrl('js/text.js') ?>"></script>
 <script src="<?= resourceUrl('js/image.js') ?>"></script>
+<script src="<?= resourceUrl('js/plugins/jquery.noty.packaged.min.js') ?>"></script>

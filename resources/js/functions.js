@@ -1,9 +1,9 @@
-function prepareNumber(value) {
+var prepareNumber = function(value) {
     if (typeof value !== 'number') {
         value = parseFloat(value);
     }
     return value;
-}
+};
 
 var NumberProperty = function (object, name) {
     var privateProp = '_' + name;
@@ -31,4 +31,17 @@ var LimitedNumberProperty = function (object, name, min, max) {
         object[privateProp] = prepared;
     };
     Object.defineProperty(object, name, this);
+};
+
+window.alert = function(type, text) {
+    noty({
+        text: text,
+        type: type,
+        dismissQueue: true,
+        layout: 'bottomRight',
+        theme: 'bootstrapTheme',
+        maxVisible: 10,
+        modal: false,
+        timeout: 15000
+    });
 };
