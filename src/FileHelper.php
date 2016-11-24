@@ -29,7 +29,7 @@ class FileHelper
     public static function generateNewCategory()
     {
         $dirName = time() . '-' . uniqid('', true);
-        $relativePath = 'loaded/' . $dirName;
+        $relativePath = userDataPath($dirName);
         $dirPath = basePath($relativePath);
         if (!@mkdir($dirPath) && !is_dir($dirPath)) {
             return '';

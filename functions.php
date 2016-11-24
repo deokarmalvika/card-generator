@@ -6,7 +6,7 @@ if(!function_exists('basePath')){
      * @param string $path
      * @return string
      */
-    function basePath($path){
+    function basePath($path = ''){
         return \NewInventor\ConfigTool\Config::get('main.basePath') . '/' . trim($path, TRIM_CHARS);
     }
 }
@@ -15,7 +15,7 @@ if(!function_exists('viewPath')){
      * @param string $path
      * @return string
      */
-    function viewPath($path){
+    function viewPath($path = ''){
         return \NewInventor\ConfigTool\Config::get('main.basePath') . '/views/' . trim($path, TRIM_CHARS);
     }
 }
@@ -24,8 +24,17 @@ if(!function_exists('publicPath')){
      * @param string $path
      * @return string
      */
-    function publicPath($path){
+    function publicPath($path = ''){
         return \NewInventor\ConfigTool\Config::get('main.basePath') . '/public/' . trim($path, TRIM_CHARS);
+    }
+}
+if(!function_exists('userDataPath')){
+    /**
+     * @param string $path
+     * @return string
+     */
+    function userDataPath($path = ''){
+        return \NewInventor\ConfigTool\Config::get('main.basePath') . '/user-data/' . trim($path, TRIM_CHARS);
     }
 }
 if(!function_exists('baseUrl')){

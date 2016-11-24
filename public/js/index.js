@@ -83,4 +83,10 @@
         $(this).closest('li').toggleClass('active');
         $('[data-font-panel]').toggleClass('hidden');
     });
+
+    $(document).on('click', '[data-canvas-block]', function (e) {
+        e.preventDefault();
+        $(this).closest('li').toggleClass('active');
+        $('[data-canvas-panel]').toggleClass('hidden');
+    });
 })(jQuery);

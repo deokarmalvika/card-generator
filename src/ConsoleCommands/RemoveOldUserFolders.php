@@ -28,7 +28,7 @@ class RemoveOldUserFolders extends Command
     {
         $sinceTime = strtotime('-' . $input->getArgument('interval'));
 
-        $dir = new \DirectoryIterator(basePath('loaded'));
+        $dir = new \DirectoryIterator(userDataPath());
         foreach ($dir as $fileinfo) {
             if (!$fileinfo->isDot() && $fileinfo->isDir()) {
                 $dirTime = substr($fileinfo->getFilename(), 0, 10);

@@ -42,9 +42,14 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav">
+                <li><a href="" data-rectangle-block><i class="fa fa-square"></i></a></li>
+                <li><a href="" data-border-block><i class="fa fa-square-o"></i></a></li>
                 <li><a href="" data-image-block><i class="fa fa-image"></i></a></li>
                 <li><a href="" data-font-block><i class="fa fa-font"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="" data-canvas-block><i class="fa fa-database"></i></a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -68,6 +73,12 @@
 
         </table>
     </div>
+    <div class="panel panel-info hidden" data-canvas-panel>
+        <div class="panel-heading">Блоки на карте</div>
+        <table class="table">
+
+        </table>
+    </div>
 </div>
 
 <div class="row">
@@ -79,6 +90,7 @@
 
         </div>
         <div class="row">
+            <div class="scrollPanel col-xs-6"></div>
             <div class="scrollPanel col-xs-6" data-images></div>
             <div class="scrollPanel col-xs-6" data-fonts></div>
         </div>
