@@ -7,7 +7,7 @@ if(!function_exists('basePath')){
      * @return string
      */
     function basePath($path){
-        return __DIR__ . '/' . trim($path, TRIM_CHARS);
+        return \NewInventor\ConfigTool\Config::get('main.basePath') . '/' . trim($path, TRIM_CHARS);
     }
 }
 if(!function_exists('viewPath')){
@@ -16,16 +16,16 @@ if(!function_exists('viewPath')){
      * @return string
      */
     function viewPath($path){
-        return __DIR__ . '/views/' . trim($path, TRIM_CHARS);
+        return \NewInventor\ConfigTool\Config::get('main.basePath') . '/views/' . trim($path, TRIM_CHARS);
     }
 }
-if(!function_exists('resourcePath')){
+if(!function_exists('publicPath')){
     /**
      * @param string $path
      * @return string
      */
-    function resourcePath($path){
-        return __DIR__ . '/resources/' . trim($path, TRIM_CHARS);
+    function publicPath($path){
+        return \NewInventor\ConfigTool\Config::get('main.basePath') . '/public/' . trim($path, TRIM_CHARS);
     }
 }
 if(!function_exists('baseUrl')){
@@ -37,13 +37,13 @@ if(!function_exists('baseUrl')){
         return \NewInventor\ConfigTool\Config::get('main.baseUrl') . '/' . trim($path, TRIM_CHARS);
     }
 }
-if(!function_exists('resourceUrl')){
+if(!function_exists('publicUrl')){
     /**
      * @param string $path
      * @return string
      */
-    function resourceUrl($path){
-        return \NewInventor\ConfigTool\Config::get('main.baseUrl') . '/resources/' . trim($path, TRIM_CHARS);
+    function publicUrl($path){
+        return \NewInventor\ConfigTool\Config::get('main.baseUrl') . '/' . trim($path, TRIM_CHARS);
     }
 }
 if(!function_exists('route')){
