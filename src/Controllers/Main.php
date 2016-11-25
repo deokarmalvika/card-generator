@@ -1,7 +1,7 @@
 <?php
 namespace NewInventor\CardGenerator\Controllers;
 
-use NewInventor\CardGenerator\FileHelper;
+use NewInventor\CardGenerator\Helpers\FileHelper;
 
 class Main
 {

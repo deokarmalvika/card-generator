@@ -16,4 +16,5 @@
             crossorigin="anonymous"></script>
     <script src="<?= publicUrl('js/plugins/dropzone.js') ?>"></script>
     <link rel="stylesheet" href="<?= publicUrl('css/index.css') ?>">
+    <link rel="stylesheet" href="<?= publicUrl($folder . '/fonts.css') ?>">
 </head>

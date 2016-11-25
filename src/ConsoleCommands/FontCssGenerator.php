@@ -23,7 +23,7 @@ class FontCssGenerator extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $template = "@font-face {\n\tfont-family: '%name%';\n\tsrc: url('fonts/%name%.ttf') format('truetype')\n}\n\n";
+        $template = "@font-face {\n\tfont-family: '%name%';\n\tsrc: url('fonts/%name%.ttf')\n}\n\n";
 
         $dir = new \DirectoryIterator(basePath('fonts'));
 

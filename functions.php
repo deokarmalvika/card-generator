@@ -34,7 +34,7 @@ if(!function_exists('userDataPath')){
      * @return string
      */
     function userDataPath($path = ''){
-        return \NewInventor\ConfigTool\Config::get('main.basePath') . '/user-data/' . trim($path, TRIM_CHARS);
+        return \NewInventor\ConfigTool\Config::get('main.basePath') . '/public/user-data/' . trim($path, TRIM_CHARS);
     }
 }
 if(!function_exists('baseUrl')){

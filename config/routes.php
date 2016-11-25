@@ -2,8 +2,10 @@
 return [
     'home' => ['GET', '/', 'NewInventor\CardGenerator\Controllers\Main#home'],
     'loadFile' => ['POST', '/load-file', 'NewInventor\CardGenerator\Controllers\File#loadFile'],
-    'getImagePath' => ['GET', '/get-image-path/[:image]', 'NewInventor\CardGenerator\Controllers\File#getImagePath'],
-    'getFontPath' => ['GET', '/get-font-path/[:font]', 'NewInventor\CardGenerator\Controllers\File#getFontPath'],
-    'saveCard' => ['POST', '/save-card', 'NewInventor\CardGenerator\Controllers\File#saveCard'],
-    'zipProcess' => ['POST', '/zipProcess', 'NewInventor\CardGenerator\Controllers\File#zipProcess'],
+    'saveCard' => ['POST', '/save/card', 'NewInventor\CardGenerator\Controllers\File#saveCard'],
+    'saveCsv' => ['POST', '/save/csv', 'NewInventor\CardGenerator\Controllers\File#saveCsv'],
+    'downloadZip' => ['GET', '/download/zip', 'NewInventor\CardGenerator\Controllers\File#downloadZip'],
+    'downloadPng' => ['GET', '/download/png/[i:id]', 'NewInventor\CardGenerator\Controllers\File#downloadPng'],
+    'downloadCsv' => ['GET', '/download/csv', 'NewInventor\CardGenerator\Controllers\File#downloadCsv'],
+    'getScenario' => ['GET', '/scenario', 'NewInventor\CardGenerator\Controllers\File#getScenario'],
 ];

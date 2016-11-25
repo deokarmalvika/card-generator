@@ -1,11 +1,14 @@
 <script>
     window.dummy = {
-        image: "<?= \NewInventor\CardGenerator\HtmlHelper::imageBlock();?>",
-        text: "<?= \NewInventor\CardGenerator\HtmlHelper::textBlock();?>",
-        rectangle: "<?= \NewInventor\CardGenerator\HtmlHelper::rectangleBlock();?>",
-        border: "<?= \NewInventor\CardGenerator\HtmlHelper::borderBlock();?>"
+        image: "<?= \NewInventor\CardGenerator\Helpers\HtmlHelper::imageBlock();?>",
+        text: "<?= \NewInventor\CardGenerator\Helpers\HtmlHelper::textBlock();?>",
+        rectangle: "<?= \NewInventor\CardGenerator\Helpers\HtmlHelper::rectangleBlock();?>",
+        border: "<?= \NewInventor\CardGenerator\Helpers\HtmlHelper::borderBlock();?>",
+        fontPreview: "<?= \NewInventor\CardGenerator\Helpers\HtmlHelper::fontPreviewBlock();?>",
+        imagePreview: "<?= \NewInventor\CardGenerator\Helpers\HtmlHelper::imagePreviewBlock();?>",
     }
 </script>
+<script src="<?= publicUrl('js/form-functions.js') ?>"></script>
 <script src="<?= publicUrl('js/index.js') ?>"></script>
 <script src="<?= publicUrl('js/functions.js') ?>"></script>
 <script src="<?= publicUrl('js/size.js') ?>"></script>

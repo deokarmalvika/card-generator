@@ -9,8 +9,8 @@ CanvasText.prototype.constructor = CanvasText;
 
 CanvasText.prototype.paint = function (context) {
     context.fillStyle = this.color.asString();
-    var lines = this.getTextLines(this.text, this.size.w, context);
     this.font.applyFont(context);
+    var lines = this.getTextLines(this.text, this.size.w, context);
     var count = lines.length;
     for (var i = 0; i < count; i++) {
         context.fillText(lines[i], this.position.x, this.position.y + (i * this.font.lineHeight));
@@ -35,4 +35,37 @@ CanvasText.prototype.getTextLines = function (text, maxWidth, context) {
     }
     lines.push(line);
     return lines;
+};
+
+CanvasText.prototype.update = function (object) {
+    ColoredBlock.prototype.update.apply(this, arguments);
+    this.text = object.text;
+    this.font.name = object.font.name;
+    this.font.size = object.font.size;
+    this.font.lineHeight = object.font.lineHeight;
+    this.font.align = object.font.align;
+    this.font.baseline = object.font.baseline;
+    this.font.direction = object.font.direction;
+};
+
+CanvasText.prototype.toArray = function () {
+    return $.merge(ColoredBlock.prototype.toArray.apply(this, arguments), [
+        this.text,
+        this.font.name,
+        this.font.size,
+        this.font.lineHeight,
+        this.font.align,
+        this.font.baseline,
+        this.font.direction
+    ]);
+};
+
+CanvasText.fromArray = function (array) {
+    return new CanvasText(
+        new Position(array[0], array[1]),
+        new Size(array[2], array[3]),
+        new Color(array[4], array[5], array[6], array[7]),
+        array[8],
+        new Font(array[9], array[10], array[11], array[12], array[13], array[14])
+    );
 };
