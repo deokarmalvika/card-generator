@@ -2,6 +2,7 @@
     var canvas;
     var context;
     var objects;
+    var ready = false;
     $.fn.canvas = function () {
         if (this.length > 0) {
             if (this[0].getContext) {
@@ -41,17 +42,48 @@
 
     $.canvas.render = function () {
         $.canvas.clear();
-        var count = objects.length;
-        for (var i = 0; i < count; i++) {
-            objects[i].paint(context);
+        ready = false;
+        $.canvas.paintBlock(0, true);
+    };
+
+    $(document).on('paint-next', function (e, index, raiseEvent) {
+        if (index === undefined) {
+            index = 0;
         }
+        $.canvas.paintBlock(index, raiseEvent);
+        if ($.canvas.allPainted() && !ready) {
+            ready = true;
+            $(document).trigger('canvas-ready');
+        }
+    });
+
+    $.canvas.paintBlock = function (index, raiseEvent) {
+        if (objects[index] === undefined) {
+            return;
+        }
+        if (raiseEvent === undefined) {
+            raiseEvent = false;
+        }
+        objects[index].paint(context, index, raiseEvent);
     };
 
     $.canvas.clear = function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
+        foreach(objects, function (obj) {
+            obj.painted = false;
+        });
     };
 
-    $.canvas.save = function (download, redirectTo) {
+    $.canvas.allPainted = function () {
+        var res = true;
+        foreach(objects, function (obj) {
+            res = res && obj.painted;
+        });
+
+        return res;
+    };
+
+    $.canvas.save = function () {
         var dataURL = canvas.toDataURL();
         $.ajax({
             type: "POST",
@@ -63,11 +95,7 @@
         }).success(function (data) {
             if (data.success) {
                 alert('success', 'Card saved on server.');
-                if(redirectTo !== undefined) {
-                    window.location.href = redirectTo;
-                }else if(download !== undefined && download) {
-                    window.location.href = '/download/png/' + data.id;
-                }
+                $('document').trigger('canvas-saved', [data.id]);
             } else {
                 alert('error', data.message);
             }
@@ -75,11 +103,10 @@
     };
 
     $.canvas.toArray = function () {
-        var count = objects.length;
         var res = [[$(canvas).attr('width'), $(canvas).attr('height')]];
-        for (var i = 0; i < count; i++) {
-            res.push($.merge([objects[i].constructor.name], objects[i].toArray()));
-        }
+        foreach(objects, function (obj) {
+            res.push($.merge([obj.constructor.name], obj.toArray()));
+        });
 
         $.ajax({
             type: "POST",
@@ -89,21 +116,20 @@
             },
             dataType: 'json'
         }).success(function (data) {
-                alert('success', 'Card csv saved on server.');
-                window.location.href = '/download/csv';
+            alert('success', 'Card csv saved on server.');
+            window.location.href = '/download/csv';
         });
     };
 
     $.canvas.fromArray = function (data) {
-        var count = data.length;
-        for (var i = 0; i < count; i++) {
-            if(i === 0){
-                $(canvas).attr('width', data[i][0]).attr('height', data[i][1]);
-                continue;
+        foreach(data, function (obj, key) {
+            if (key === 0) {
+                $(canvas).attr('width', obj[0]).attr('height', obj[1]);
+                return;
             }
-            var objectClass = data[i].splice(0, 1);
-            objects.push(window[objectClass].fromArray(data[i]));
-        }
+            var objectClass = obj.splice(0, 1);
+            objects.push(window[objectClass].fromArray(obj));
+        });
     }
 })(jQuery);
 

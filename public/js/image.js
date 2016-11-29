@@ -2,12 +2,13 @@ var CanvasImage = function (position, size, url, saveDimensions) {
     this.url = !!url ? url : '';
     this.saveDimensions = !!saveDimensions;
     Block.apply(this, [position, size]);
+    this.painted = false;
 };
 
 CanvasImage.prototype = Object.create(Block.prototype);
 CanvasImage.prototype.constructor = CanvasImage;
 
-CanvasImage.prototype.paint = function (context) {
+CanvasImage.prototype.paint = function (context, index, raiseEvent) {
     var imageObj = new Image();
     var that = this;
     imageObj.src = this.url;
@@ -24,6 +25,8 @@ CanvasImage.prototype.paint = function (context) {
             }
         }
         context.drawImage(imageObj, that.position.x, that.position.y, width, height);
+        that.painted = true;
+        $(document).trigger('paint-next', [index + 1, raiseEvent]);
     };
 };
 

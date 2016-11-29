@@ -2,17 +2,20 @@ var Border = function (position, size, color, width) {
     this._width = !!width ? prepareNumber(width) : 1;
     new NumberProperty(this, 'width');
     Rectangle.apply(this, [position, size, color]);
+    this.painted = false;
 };
 
 Border.prototype = Object.create(Rectangle.prototype);
 Border.prototype.constructor = Border;
 
-Border.prototype.paint = function (context) {
+Border.prototype.paint = function (context, index, raiseEvent) {
     context.strokeStyle = this.color.asString();
     context.lineWidth = this._width;
     context.lineCap = 'butt';
     context.lineJoin = 'miter';
     context.strokeRect(this.position.x, this.position.y, this.size.w, this.size.h);
+    this.painted = true;
+    $(document).trigger('paint-next', [index + 1, raiseEvent]);
 };
 
 Border.prototype.update = function (object) {
