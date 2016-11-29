@@ -3,6 +3,8 @@
     var context;
     var objects;
     var ready = false;
+
+    var save = false;
     $.fn.canvas = function () {
         if (this.length > 0) {
             if (this[0].getContext) {
@@ -40,9 +42,10 @@
         objects.splice(index, 1);
     };
 
-    $.canvas.render = function () {
+    $.canvas.render = function (toSave) {
         $.canvas.clear();
         ready = false;
+        save = toSave;
         $.canvas.paintBlock(0, true);
     };
 
@@ -54,6 +57,10 @@
         if ($.canvas.allPainted() && !ready) {
             ready = true;
             $(document).trigger('canvas-ready');
+            if(save) {
+                $.canvas.save();
+            }
+            save = false;
         }
     });
 
@@ -83,7 +90,7 @@
         return res;
     };
 
-    $.canvas.save = function () {
+    $.canvas.save = function (type) {
         var dataURL = canvas.toDataURL();
         $.ajax({
             type: "POST",
@@ -95,7 +102,8 @@
         }).success(function (data) {
             if (data.success) {
                 alert('success', 'Card saved on server.');
-                $('document').trigger('canvas-saved', [data.id]);
+                $(document).trigger('canvas-saved', [data.id]);
+                $.canvas.download(type, data.id);
             } else {
                 alert('error', data.message);
             }
@@ -117,7 +125,7 @@
             dataType: 'json'
         }).success(function (data) {
             alert('success', 'Card csv saved on server.');
-            window.location.href = '/download/csv';
+            $.canvas.download('csv');
         });
     };
 
@@ -130,6 +138,16 @@
             var objectClass = obj.splice(0, 1);
             objects.push(window[objectClass].fromArray(obj));
         });
+    };
+
+    $.canvas.download = function (type, id) {
+        if (type === 'csv') {
+            window.location.href = '/download/card/csv';
+        } else if (type === 'png') {
+            window.location.href = '/download/card/png/' + id;
+        } else if (type === 'zip') {
+            window.location.href = '/download/zip';
+        }
     }
 })(jQuery);
 

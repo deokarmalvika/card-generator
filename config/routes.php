@@ -5,7 +5,8 @@ return [
     'saveCard' => ['POST', '/save/card', 'NewInventor\CardGenerator\Controllers\File#saveCard'],
     'saveCsv' => ['POST', '/save/csv', 'NewInventor\CardGenerator\Controllers\File#saveCsv'],
     'downloadZip' => ['GET', '/download/zip', 'NewInventor\CardGenerator\Controllers\File#downloadZip'],
-    'downloadPng' => ['GET', '/download/png/[i:id]', 'NewInventor\CardGenerator\Controllers\File#downloadPng'],
-    'downloadCsv' => ['GET', '/download/csv', 'NewInventor\CardGenerator\Controllers\File#downloadCsv'],
+    'downloadPng' => ['GET', '/download/card/png/[i:id]', 'NewInventor\CardGenerator\Controllers\File#downloadCardPng'],
+    'downloadCsv' => ['GET', '/download/card/csv', 'NewInventor\CardGenerator\Controllers\File#downloadCardCsv'],
+    'downloadCardZip' => ['GET', '/download/card/zip', 'NewInventor\CardGenerator\Controllers\File#downloadCardZip'],
     'getScenario' => ['GET', '/scenario', 'NewInventor\CardGenerator\Controllers\File#getScenario'],
 ];

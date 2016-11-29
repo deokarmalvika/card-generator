@@ -3,8 +3,6 @@
  */
 (function ($, undefined) {
     Dropzone.autoDiscover = false;
-    var save = false;
-    var goto = '';
 
     var $uploadBlock = $("#files-upload");
     var fileExtensions = ['.jpg', '.png', '.gif', '.jpeg', '.ttf', '.TTF', '.otf', '.eot', '.woff', '.woff2', '.csv', '.zip'];
@@ -33,6 +31,9 @@
 
             }
             this.removeFile(file);
+        },
+        drop: function () {
+            hideDropZone();
         },
         error: function (file) {
             alert(file.status, 'File "' + file.name + '" ' + 'not loaded to the server.' + (!file.accepted ? ' Wrong file type.' : ' Uncatchable error'));
@@ -98,13 +99,11 @@
 
     $(document).on('input change', '[data-width]', function () {
         $('#card').attr('width', parseInt($(this).val()));
-        save = false;
         $.canvas.render();
     });
 
     $(document).on('input change', '[data-height]', function () {
         $('#card').attr('height', parseInt($(this).val()));
-        save = false;
         $.canvas.render();
     });
 
@@ -150,7 +149,6 @@
     $(document).on('click', '[data-clear-canvas]', function (e) {
         e.preventDefault();
         $('canvas').canvas();
-        save = false;
         $.canvas.render();
     });
 
@@ -198,7 +196,6 @@
             );
         }
         $.canvas.add(object);
-        save = false;
         $.canvas.render();
         $('#addBlock').modal('toggle');
     });
@@ -217,9 +214,7 @@
 
     $(document).on('click', '[data-load-card]', function (e) {
         e.preventDefault();
-        save = true;
-        goto = '/download/png/%id%';
-        $.canvas.save();
+        $.canvas.save('png');
     });
 
     $(document).on('click', '[data-load-scenario]', function (e) {
@@ -235,7 +230,7 @@
             dataType: 'json'
         }).success(function (data) {
             var count = data.length;
-            var i = 0;
+            var i;
             for (i = 0; i < count; i++) {
                 var blockCount = data[i].length;
                 for(var j = 0; j < blockCount; j++){
@@ -244,25 +239,22 @@
                     }
                 }
             }
-            save = true;
-            goto = '/download/zip';
-            for(i = 0; i < count; i++) {
-                $('canvas').canvas();
+            i = 0;
+            var $canvas = $('canvas');
+            $canvas.canvas();
+            $.canvas.fromArray(data[i]);
+            $.canvas.render(true);
+            $(document).on('canvas-saved', function () {
+                i++;
+                if(data[i] === undefined){
+                    $(document).off('canvas-saved');
+                    $.canvas.download('zip');
+                    return;
+                }
+                $canvas.canvas();
                 $.canvas.fromArray(data[i]);
-                $.canvas.render();
-            }
+                $.canvas.render(true);
+            });
         });
-    });
-
-    $(document).on('canvas-ready', function () {
-        if(save){
-            $.canvas.save();
-        }
-    });
-
-    $(document).on('canvas-saved', function (e, index) {
-        if(goto !== '') {
-            window.location.href = goto.replace(/%id%/g, index);
-        }
     });
 })(jQuery);

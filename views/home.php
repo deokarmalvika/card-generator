@@ -5,7 +5,6 @@
 <form class="dz-clickable dropzone" id="files-upload" action="<?= route('loadFile') ?>" data-drop-zone></form>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -16,14 +15,13 @@
             </button>
             <span class="navbar-brand">Card generator</span>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input type="text" class="form-control short-input" placeholder="Ширина" data-width>
+                    <input type="text" class="form-control short-input" placeholder="Ширина" data-width value="200">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control short-input" placeholder="Высота" data-height>
+                    <input type="text" class="form-control short-input" placeholder="Высота" data-height value="300">
                 </div>
             </form>
             <ul class="nav navbar-nav">
@@ -112,7 +110,7 @@
     </div>
 </div>
 
-<div class="row text-center"><canvas id="card"></canvas></div>
+<div class="row text-center"><canvas id="card" width="200" height="300"></canvas></div>
 
 <?php require viewPath('common/scripts.php') ?>
 </body>
