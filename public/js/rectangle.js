@@ -1,13 +1,16 @@
 var Rectangle = function (position, size, color) {
     ColoredBlock.apply(this, arguments);
+    this.painted = false;
 };
 
 Rectangle.prototype = Object.create(ColoredBlock.prototype);
 Rectangle.prototype.constructor = Rectangle;
 
-Rectangle.prototype.paint = function (context) {
+Rectangle.prototype.paint = function (context, index, raiseEvent) {
     context.fillStyle = this.color.asString();
     context.fillRect(this.position.x, this.position.y, this.size.w, this.size.h);
+    this.painted = true;
+    $(document).trigger('paint-next', [index + 1, raiseEvent]);
 };
 
 Rectangle.fromArray = function (array) {

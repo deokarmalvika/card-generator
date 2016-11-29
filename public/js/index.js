@@ -3,6 +3,8 @@
  */
 (function ($, undefined) {
     Dropzone.autoDiscover = false;
+    var save = false;
+    var goto = '';
 
     var $uploadBlock = $("#files-upload");
     var fileExtensions = ['.jpg', '.png', '.gif', '.jpeg', '.ttf', '.TTF', '.otf', '.eot', '.woff', '.woff2', '.csv', '.zip'];
@@ -96,11 +98,13 @@
 
     $(document).on('input change', '[data-width]', function () {
         $('#card').attr('width', parseInt($(this).val()));
+        save = false;
         $.canvas.render();
     });
 
     $(document).on('input change', '[data-height]', function () {
         $('#card').attr('height', parseInt($(this).val()));
+        save = false;
         $.canvas.render();
     });
 
@@ -146,6 +150,7 @@
     $(document).on('click', '[data-clear-canvas]', function (e) {
         e.preventDefault();
         $('canvas').canvas();
+        save = false;
         $.canvas.render();
     });
 
@@ -193,6 +198,7 @@
             );
         }
         $.canvas.add(object);
+        save = false;
         $.canvas.render();
         $('#addBlock').modal('toggle');
     });
@@ -211,7 +217,9 @@
 
     $(document).on('click', '[data-load-card]', function (e) {
         e.preventDefault();
-        $.canvas.save(true);
+        save = true;
+        goto = '/download/png/%id%';
+        $.canvas.save();
     });
 
     $(document).on('click', '[data-load-scenario]', function (e) {
@@ -227,17 +235,34 @@
             dataType: 'json'
         }).success(function (data) {
             var count = data.length;
-            for(var i = 0; i < count; i++) {
+            var i = 0;
+            for (i = 0; i < count; i++) {
+                var blockCount = data[i].length;
+                for(var j = 0; j < blockCount; j++){
+                    if(data[i][j][0] === 'CanvasImage'){
+                        data[i][j][5] = $('meta[name=userFolder]').attr('content') + '/images/' + data[i][j][5];
+                    }
+                }
+            }
+            save = true;
+            goto = '/download/zip';
+            for(i = 0; i < count; i++) {
                 $('canvas').canvas();
                 $.canvas.fromArray(data[i]);
                 $.canvas.render();
-                setTimeout(function () {
-                    $.canvas.save();
-                }, 0);
             }
-            setTimeout(function () {
-                window.location.href = '/download/zip';
-            }, 1000);
         });
+    });
+
+    $(document).on('canvas-ready', function () {
+        if(save){
+            $.canvas.save();
+        }
+    });
+
+    $(document).on('canvas-saved', function (e, index) {
+        if(goto !== '') {
+            window.location.href = goto.replace(/%id%/g, index);
+        }
     });
 })(jQuery);

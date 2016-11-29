@@ -45,3 +45,10 @@ window.alert = function(type, text) {
         timeout: 15000
     });
 };
+
+var foreach = function (array, callback) {
+    var count = array.length;
+    for (var i = 0; i < count; i++) {
+        callback(array[i], i);
+    }
+};

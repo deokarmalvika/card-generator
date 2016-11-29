@@ -2,12 +2,13 @@ var CanvasText = function (position, size, color, text, font) {
     this.text = !!text ? text : '';
     this.font = font.constructor.name === 'Font' ? font : new Font();
     ColoredBlock.apply(this, [position, size, color]);
+    this.painted = false;
 };
 
 CanvasText.prototype = Object.create(ColoredBlock.prototype);
 CanvasText.prototype.constructor = CanvasText;
 
-CanvasText.prototype.paint = function (context) {
+CanvasText.prototype.paint = function (context, index, raiseEvent) {
     context.fillStyle = this.color.asString();
     this.font.applyFont(context);
     var lines = this.getTextLines(this.text, this.size.w, context);
@@ -15,6 +16,8 @@ CanvasText.prototype.paint = function (context) {
     for (var i = 0; i < count; i++) {
         context.fillText(lines[i], this.position.x, this.position.y + (i * this.font.lineHeight));
     }
+    this.painted = true;
+    $(document).trigger('paint-next', [index + 1, raiseEvent]);
 };
 
 CanvasText.prototype.getTextLines = function (text, maxWidth, context) {
@@ -60,7 +63,7 @@ CanvasText.prototype.toArray = function () {
     ]);
 };
 
-CanvasText.fromArray = function (array) {
+CanvasText.prototype.fromArray = function (array) {
     return new CanvasText(
         new Position(array[0], array[1]),
         new Size(array[2], array[3]),
