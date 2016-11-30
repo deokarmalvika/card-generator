@@ -10,6 +10,7 @@ namespace NewInventor\CardGenerator;
 
 
 use NewInventor\ConfigTool\Config;
+use NewInventor\CardGenerator\Vendor\AltoRouterFix;
 
 class Router
 {
@@ -18,7 +19,7 @@ class Router
 
     public static function handleRequest()
     {
-        self::$router = new \AltoRouter();
+        self::$router = new AltoRouterFix();
         self::$router->addRoutes(self::getRoutes());
         $match = self::$router->match();
         if ($match && is_callable($match['target'])) {

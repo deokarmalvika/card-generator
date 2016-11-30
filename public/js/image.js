@@ -38,7 +38,7 @@ CanvasImage.prototype.update = function (object) {
 
 CanvasImage.prototype.toArray = function () {
     return $.merge(Block.prototype.toArray.apply(this, arguments), [
-        this.url,
+        this.url.replace(/^(.*\/)/, ''),
         this.saveDimensions
     ]);
 };

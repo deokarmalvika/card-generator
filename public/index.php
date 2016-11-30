@@ -10,5 +10,4 @@ Config::init(__DIR__ . '/../config');
 require_once __DIR__ . '/../functions.php';
 FontHelper::writeUserFontsCss();
 Router::handleRequest();
-
 session_write_close();
