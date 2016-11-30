@@ -39,3 +39,4 @@ public/js/plugins/jquery-1.12.4.min.js
 public/css/plugins/bootstrap.min.css
 /public/user-data/
 /tests
+/test.*
