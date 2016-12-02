@@ -60,14 +60,15 @@ class FileHelper
     public static function getImagesList()
     {
         $res = [];
-        $images = self::getImagesPath();
-        if (!file_exists($images)) {
+        $imagesUrl = self::getImagesUrl();
+        $imagesPath = self::getImagesPath();
+        if (!file_exists($imagesPath)) {
             return [];
         }
-        $dir = new \DirectoryIterator($images);
+        $dir = new \DirectoryIterator($imagesPath);
         foreach ($dir as $fileinfo) {
             if (!$fileinfo->isDot() && $fileinfo->isFile()) {
-                $res[] = $images . '/' . $fileinfo->getFilename();
+                $res[] = $imagesUrl . '/' . $fileinfo->getFilename();
             }
         }
 
@@ -90,27 +91,37 @@ class FileHelper
 
     public static function getImagesPath($path = '')
     {
-        return publicPath(FileHelper::getUserCategory() . '/images/' . trim($path, TRIM_CHARS));
+        return publicPath(self::getUserCategory() . '/images/' . trim($path, TRIM_CHARS));
+    }
+
+    public static function getImagesUrl($path = '')
+    {
+        return publicUrl(self::getUserCategory() . '/images/' . trim($path, TRIM_CHARS));
     }
 
     public static function getFontsPath($path = '')
     {
-        return publicPath(FileHelper::getUserCategory() . '/fonts/' . trim($path, TRIM_CHARS));
+        return publicPath(self::getUserCategory() . '/fonts/' . trim($path, TRIM_CHARS));
+    }
+
+    public static function getFontsUrl($path = '')
+    {
+        return publicUrl(self::getUserCategory() . '/fonts/' . trim($path, TRIM_CHARS));
     }
 
     public static function getDonePath($path = '')
     {
-        return publicPath(FileHelper::getUserCategory() . '/done/' . trim($path, TRIM_CHARS));
+        return publicPath(self::getUserCategory() . '/done/' . trim($path, TRIM_CHARS));
     }
 
     public static function getTmpZipPath($path = '')
     {
-        return publicPath(FileHelper::getUserCategory() . '/zip/' . trim($path, TRIM_CHARS));
+        return publicPath(self::getUserCategory() . '/zip/' . trim($path, TRIM_CHARS));
     }
 
     public static function getUserPath($path = '')
     {
-        return publicPath(FileHelper::getUserCategory() . '/' . trim($path, TRIM_CHARS));
+        return publicPath(self::getUserCategory() . '/' . trim($path, TRIM_CHARS));
     }
 
     public static function accessFolder($path)
@@ -139,7 +150,7 @@ class FileHelper
             }
         }
         $scenarioPath = self::getTmpZipPath('scenario.csv');
-        if(file_exists($scenarioPath)){
+        if (file_exists($scenarioPath)) {
             rename($scenarioPath, self::getUserPath('scenario.csv'));
         }
     }
@@ -189,13 +200,18 @@ class FileHelper
 
     public static function moveLoadedFile($file, $subdir = '', $name = '')
     {
-        $dir = FileHelper::getUserPath($subdir);
-        if (FileHelper::accessFolder($dir)) {
+        $dir = self::getUserPath($subdir);
+        if (self::accessFolder($dir)) {
             return ['success' => false];
         }
         if (move_uploaded_file($file['tmp_name'], $dir . '/' . ($name !== '' ? $name : $file['name']))) {
             return ['success' => true];
         }
         return ['success' => false];
+    }
+
+    public static function log($text, array $context)
+    {
+
     }
 }
