@@ -63,7 +63,7 @@ CanvasText.prototype.toArray = function () {
     ]);
 };
 
-CanvasText.prototype.fromArray = function (array) {
+CanvasText.fromArray = function (array) {
     return new CanvasText(
         new Position(array[0], array[1]),
         new Size(array[2], array[3]),
